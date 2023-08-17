@@ -1,50 +1,88 @@
 const crypto = require('crypto');
 const data = 'Секретное сообщение';
 
-{
-  const hash = crypto.createHash('sha1').update(data).digest('hex');
-  console.log('sha1', hash);
-}
+// {
+//   const hash = crypto.createHash('sha1').update(data).digest('hex');
+//   console.log('sha1', hash);
+// }
 
-{
-  const hash = crypto.createHash('sha256').update(data).digest('hex');
-  console.log('sha256', hash);
-}
+// {
+//   const hash = crypto.createHash('sha256').update(data).digest('hex');
+//   console.log('sha256', hash);
+// }
 
-{
-  const hash = crypto.createHash('sha384').update(data).digest('hex');
-  console.log('sha384', hash);
-}
+// {
+//   const hash = crypto.createHash('sha384').update(data).digest('hex');
+//   console.log('sha384', hash);
+// }
 
-{
-  const hash = crypto.createHash('sha512').update(data).digest('hex');
-  console.log('sha512', hash);
-}
+// {
+//   const hash = crypto.createHash('sha512').update(data).digest('hex');
+//   console.log('sha512', hash);
+// }
 
-{
-  const hash = crypto.createHash('sha3-256').update(data).digest('hex');
-  console.log('sha3-256', hash);
-}
+// {
+//   const hash = crypto.createHash('sha3-256').update(data).digest('hex');
+//   console.log('sha3-256', hash);
+// }
 
-{
-  const hash = crypto.createHash('md5').update(data).digest('hex');
-  console.log('md5', hash);
-}
+// {
+//   const hash = crypto.createHash('md5').update(data).digest('hex');
+//   console.log('md5', hash);
+// }
 
-{
-  const hash = crypto.createHash('blake2b512').update(data).digest('hex');
-  console.log('blake2b512', hash);
-}
+// {
+//   const hash = crypto.createHash('blake2b512').update(data).digest('hex');
+//   console.log('blake2b512', hash);
+// }
 
-{
-  const hash = crypto.createHash('ripemd160').update(data).digest('hex');
-  console.log('ripemd160', hash);
-}
+// {
+//   const hash = crypto.createHash('ripemd160').update(data).digest('hex');
+//   console.log('ripemd160', hash);
+// }
 
 {
   const firstHash = crypto.createHash('sha256').update(data).digest();
   const finalHash = crypto.createHash('sha256').update(firstHash).digest('hex');
   console.log('sha256 (два раза)', finalHash);
+}
+//или так
+{
+  const firstHash = crypto.createHash('sha256').update(data).digest('hex');
+  const finalHash = crypto
+    .createHash('sha256')
+    .update(firstHash, 'hex')
+    .digest('hex');
+  console.log('sha256 (два раза)', finalHash);
+}
+//или так
+{
+  const firstHash = crypto.createHash('sha256').update(data).digest('binary');
+  const finalHash = crypto
+    .createHash('sha256')
+    .update(firstHash, 'binary')
+    .digest('hex');
+  console.log('sha256 (два раза)', finalHash);
+}
+// другой резульатат:
+{
+  const firstHash = crypto.createHash('sha256').update(data).digest('hex');
+  const finalHash = crypto.createHash('sha256').update(firstHash).digest('hex');
+  console.log('sha256 (два раза)', finalHash);
+}
+// другой резульатат:
+{
+  const firstHash = crypto.createHash('sha256').update(data).digest('binary');
+  const finalHash = crypto.createHash('sha256').update(firstHash).digest('hex');
+  console.log('sha256 (два раза)', finalHash);
+}
+
+{
+  let hash = crypto.createHash('sha256').update(data).digest('hex');
+  for (let i = 0; i < 10; i++) {
+    hash = crypto.createHash('sha256').update(hash).digest('hex');
+  }
+  console.log('sha256 (10 раза)', hash);
 }
 
 /*
