@@ -1,5 +1,6 @@
 const crypto = require('crypto');
 const data = 'Секретное сообщение';
+const salt = 'random-salt-value';
 
 // {
 //   const hash = crypto.createHash('sha1').update(data).digest('hex');
@@ -83,6 +84,28 @@ const data = 'Секретное сообщение';
     hash = crypto.createHash('sha256').update(hash).digest('hex');
   }
   console.log('sha256 (10 раза)', hash);
+}
+
+{
+  let c = crypto.createHash('sha256');
+  for (let i = 0; i < 10; i++) {
+    c = c.update(data);
+  }
+  const hash = c.digest('hex');
+  console.log('sha256 (10 раза):', hash);
+}
+
+{
+  const hash = crypto
+    .createHash('sha256')
+    .update(data + salt)
+    .digest('hex');
+  console.log('sha256 with Salt:', hash);
+}
+
+{
+  const hash = crypto.createHash('sha256', salt).update(data).digest('hex');
+  console.log('sha256 with Salt:', hash);
 }
 
 /*
