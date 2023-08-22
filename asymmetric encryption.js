@@ -4,7 +4,7 @@ const fs = require('fs');
 
 // Генерация пары ключей
 const { publicKey, privateKey } = crypto.generateKeyPairSync('rsa', {
-  modulusLength: 2048,
+  modulusLength: 2048, // Длина ключа в битах
   publicKeyEncoding: { type: 'spki', format: 'pem' },
   privateKeyEncoding: { type: 'pkcs8', format: 'pem' },
 });
