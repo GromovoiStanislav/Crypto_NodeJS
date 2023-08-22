@@ -8,6 +8,8 @@ app.use(express.json());
 
 function generateRandomToken() {
   return crypto.randomBytes(32).toString('hex');
+  // or
+  //return crypto.randomBytes(32).toString('base64');
 }
 
 app.post('/login', (req, res) => {
