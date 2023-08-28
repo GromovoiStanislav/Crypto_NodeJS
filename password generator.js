@@ -1,5 +1,3 @@
-const crypto = require('crypto');
-
 {
   function generateRandomPassword(length = 12, useSpecialChars = false) {
     let characters =
@@ -23,7 +21,7 @@ const crypto = require('crypto');
 }
 
 {
-  const crypto = require('crypto');
+  const { randomInt } = require('crypto');
 
   function generateRandomPassword(length = 12, useSpecialChars = false) {
     let characters =
@@ -36,7 +34,7 @@ const crypto = require('crypto');
     const characterCount = characters.length;
 
     for (let i = 0; i < length; i++) {
-      const randomIndex = crypto.randomInt(0, characterCount);
+      const randomIndex = randomInt(0, characterCount);
       password.push(characters[randomIndex]);
     }
 
