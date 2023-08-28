@@ -20,21 +20,35 @@ crypto.generateKeyPair(
   }
 );
 
-// Генерируем ключи для ECDSA с кривой P-256
-const { privateKey, publicKey } = crypto.generateKeyPairSync('ec', {
-  namedCurve: 'P-256', // Выбираем кривую P-256
-  publicKeyEncoding: {
-    type: 'spki',
-    format: 'pem',
-  },
-  privateKeyEncoding: {
-    type: 'pkcs8',
-    format: 'pem',
-  },
-});
+{
+  // Генерация пары ключей RSA
+  const { publicKey, privateKey } = crypto.generateKeyPairSync('rsa', {
+    modulusLength: 2048, // Длина ключа в битах
+    publicKeyEncoding: { type: 'spki', format: 'pem' },
+    privateKeyEncoding: { type: 'pkcs8', format: 'pem' },
+  });
 
-console.log('Публичный ключ (ECDSA):', publicKey);
-console.log('Приватный ключ (ECDSA):', privateKey);
+  console.log('Публичный ключ (RSA):', publicKey);
+  console.log('Приватный ключ (RSA):', privateKey);
+}
+
+{
+  // Генерируем ключи для ECDSA с кривой P-256
+  const { privateKey, publicKey } = crypto.generateKeyPairSync('ec', {
+    namedCurve: 'P-256', // Выбираем кривую P-256
+    publicKeyEncoding: {
+      type: 'spki',
+      format: 'pem',
+    },
+    privateKeyEncoding: {
+      type: 'pkcs8',
+      format: 'pem',
+    },
+  });
+
+  console.log('Публичный ключ (ECDSA):', publicKey);
+  console.log('Приватный ключ (ECDSA):', privateKey);
+}
 
 /*
   В Node.js, модуль crypto поддерживает различные кривые для алгоритма ECDSA (Elliptic Curve Digital Signature Algorithm). Вот некоторые из поддерживаемых кривых:
