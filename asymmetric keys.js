@@ -1,24 +1,37 @@
-// Генерируем ключи для RSA
-crypto.generateKeyPair(
-  'rsa',
-  {
-    modulusLength: 2048, // Длина ключа в битах
-    publicKeyEncoding: {
-      type: 'spki',
-      format: 'pem',
-    },
-    privateKeyEncoding: {
-      type: 'pkcs8',
-      format: 'pem',
-    },
-  },
-  (err, publicKey, privateKey) => {
-    if (err) throw err;
+const crypto = require('crypto');
 
-    console.log('Публичный ключ (RSA):', publicKey);
-    console.log('Приватный ключ (RSA):', privateKey);
-  }
-);
+{
+  // Генерируем ключи для RSA
+  crypto.generateKeyPair(
+    'rsa',
+    {
+      modulusLength: 2048, // Длина ключа в битах
+      publicKeyEncoding: {
+        type: 'spki',
+        format: 'der', // Формат открытого  ключа
+      },
+      privateKeyEncoding: {
+        type: 'pkcs8',
+        format: 'der', // Формат закрытого ключа
+      },
+    },
+    (err, publicKey, privateKey) => {
+      if (err) throw err;
+
+      console.log('Публичный ключ (RSA):', publicKey.toString('base64'));
+      console.log('Приватный ключ (RSA):', privateKey.toString('base64'));
+    }
+  );
+}
+
+/*
+  Помимо формата 'pem', который представляет собой стандартный формат для хранения и представления ключей и сертификатов в виде текстовых строк, существуют и другие форматы для представления ключей. Вот некоторые из них:
+
+'der' (Distinguished Encoding Rules): Это бинарный формат, который использует DER для кодирования данных. DER является более компактным представлением ключей и сертификатов в сравнении с PEM.
+
+
+ Формат 'pem' часто используется для удобства чтения и обмена ключами в текстовом виде, в то время как 'der' часто используются для хранения ключей в бинарном виде или в более структурированном формате.
+  */
 
 {
   // Генерация пары ключей RSA
