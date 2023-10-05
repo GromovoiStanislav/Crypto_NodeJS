@@ -44,3 +44,43 @@ console.log('Расшифрованный текст:', decrypted);
  * для 'aes-192-cbc' - key = crypto.randomBytes(24)
  * для 'aes-256-cbc' - key = crypto.randomBytes(32)
  */
+
+{
+  // Генерируем ключ
+  const encryptionKey = crypto.randomBytes(32); // Ключ (256 бит)
+
+  // Преобразуем ключ в текстовое представление
+  const keyText = encryptionKey.toString('base64');
+  console.log('Secret Key:', keyText);
+  // Преобразуем ключ в бинарное представление
+  const key = Buffer.from(keyText, 'base64');
+  // Сравниваем ключи по содержимому
+  console.log('Ключи равны:', Buffer.compare(encryptionKey, key) === 0);
+
+  // Генерируем IV (Initialization Vector)
+  const iv = crypto.randomBytes(16); // IV (128 бит)
+
+  // Функция для шифрования email
+  function encryptEmail(email) {
+    const cipher = crypto.createCipheriv('aes-256-cbc', encryptionKey, iv);
+    let encryptedEmail = cipher.update(email, 'utf-8', 'base64');
+    encryptedEmail += cipher.final('base64');
+    return encryptedEmail;
+  }
+
+  // Функция для дешифрования email
+  function decryptEmail(encryptedEmail) {
+    const decipher = crypto.createDecipheriv('aes-256-cbc', encryptionKey, iv);
+    let decryptedEmail = decipher.update(encryptedEmail, 'base64', 'utf-8');
+    decryptedEmail += decipher.final('utf-8');
+    return decryptedEmail;
+  }
+
+  // Пример использования
+  const originalEmail = 'example@email.com';
+  const encryptedEmail = encryptEmail(originalEmail);
+  console.log('Зашифрованный email (Base64):', encryptedEmail);
+
+  const decryptedEmail = decryptEmail(encryptedEmail);
+  console.log('Расшифрованный email:', decryptedEmail);
+}
