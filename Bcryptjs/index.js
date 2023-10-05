@@ -1,15 +1,18 @@
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 const plaintextPassword = 'mysecretpassword';
 const saltRounds = 10;
 
 // Technique 1
 {
-  const salt = await bcrypt.genSalt(saltRounds);
+  let salt = await bcrypt.genSalt(saltRounds);
   console.log('salt', salt);
 
   const hash = await bcrypt.hash(plaintextPassword, salt);
   console.log('hash', hash);
+
+  salt = bcrypt.getSalt(hash);
+  console.log('salt', salt);
 
   const match = await bcrypt.compare(plaintextPassword, hash);
   console.log('match ', match);
@@ -19,6 +22,9 @@ const saltRounds = 10;
 {
   const hash = await bcrypt.hash(plaintextPassword, saltRounds);
   console.log('hash', hash);
+
+  const salt = bcrypt.getSalt(hash);
+  console.log('salt', salt);
 
   const match = await bcrypt.compare(plaintextPassword, hash);
   console.log('match ', match);
