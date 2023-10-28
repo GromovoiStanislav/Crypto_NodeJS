@@ -8,8 +8,12 @@ console.log('Secret Key:', keyText);
 // Преобразуем ключ в бинарное представление
 const key = Buffer.from(keyText, 'base64');
 
-// Генерируем IV (128 бит)
-const iv = crypto.randomBytes(16);
+// Генерируем IV (128 бит) в виде текстовой строки
+const keyIV = crypto.randomBytes(16).toString('base64');
+console.log('Secret IV:', keyIV);
+
+// Преобразуем IV в бинарное представление
+const iv = Buffer.from(keyIV, 'base64');
 
 // Текст, который мы хотим зашифровать
 const plaintext = 'Пример текста для шифрования с использованием AES';
