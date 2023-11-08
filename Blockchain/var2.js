@@ -1,5 +1,4 @@
-const fs = require('fs');
-const crypto = require('crypto');
+const crypto = require('node:crypto');
 
 class Block {
   constructor(index, timestamp, data, previousHash) {
@@ -51,10 +50,12 @@ class Blockchain {
     for (let i = 1; i < this.blocks.length; i++) {
       const currentBlock = this.blocks[i];
       const previousBlock = this.blocks[i - 1];
+
       if (currentBlock.previousHash !== previousBlock.hash) {
         return false;
       }
     }
+
     return true;
   }
 }
