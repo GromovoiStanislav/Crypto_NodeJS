@@ -1,4 +1,5 @@
 const { createId, init, isCuid } = require('@paralleldrive/cuid2');
+//import { createId, init, isCuid } from '@paralleldrive/cuid2';
 
 console.log(createId());
 console.log(createId());
