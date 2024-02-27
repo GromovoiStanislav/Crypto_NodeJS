@@ -1,4 +1,5 @@
 const crypto = require('crypto');
+
 const data = 'Секретное сообщение';
 const salt = 'random-salt-value';
 
@@ -106,6 +107,21 @@ const salt = 'random-salt-value';
 {
   const hash = crypto.createHash('sha256', salt).update(data).digest('hex');
   console.log('sha256 with Salt:', hash);
+}
+
+{
+  // Метод pbkdf2 - длинный ключь
+  crypto.pbkdf2('data', salt, 100000, 64, 'sha512', (err, derivedKey) => {
+    if (err) throw err;
+
+    // В этом месте можно выполнить дополнительные действия с derivedKey,
+    // например, сохранить его в базу данных или использовать в системе аутентификации.
+    console.log('Процесс PBKDF2 завершен. Полученный ключ:', derivedKey);
+
+    // Преобразование буфера в строку
+    const derivedKeyString = derivedKey.toString('hex');
+    console.log('Процесс PBKDF2 завершен. Полученный ключ:', derivedKeyString);
+  });
 }
 
 /*
